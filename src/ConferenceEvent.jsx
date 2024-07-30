@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./ConferenceEvent.css";
 import TotalCost from "./TotalCost";
+import { toggleMealSelection } from "./mealsSlice";
 import { useSelector, useDispatch } from "react-redux";
 import { incrementQuantity, decrementQuantity } from "./venueSlice";
 import { incrementAvQuantity, decrementAvQuantity } from "./avSlice";
@@ -59,8 +60,7 @@ const ConferenceEvent = () => {
                 items.push({...item, type:"venue"});
             }
         });
-    };
-    avItems.forEach((item) => {
+        avItems.forEach((item) => {
         if(
             item.quantity > 0 &&
             !items.some((i) => i.name === item.name && i.type === "av")
@@ -83,7 +83,7 @@ const ConferenceEvent = () => {
 
     const ItemsDisplay = ({ items }) => {
         console.log(items);
-    return <>
+        return <>
         <div className="display_box1">
             {items.length === 0 && <p>No items selected</p>}
             <table className="table_item_data">
@@ -132,6 +132,7 @@ const ConferenceEvent = () => {
                   totalCost += item.cost * numberOfPeople;
                 }
               });
+        }
         return totalCost;
       };
     const venueTotalCost = calculateTotalCost("venue");
